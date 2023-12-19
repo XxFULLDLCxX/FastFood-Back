@@ -66,8 +66,8 @@ model Payment {
   code      Int      @unique @default(autoincrement())
   total     Int?
   status    String?  @default("PENDING")
-  userId    Int
-  users     User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  userId    Int?
+  users     User?     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
   orders Order[]
