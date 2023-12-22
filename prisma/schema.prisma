@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Additional {
-  id        Int      @id @default(autoincrement())
-  name      String   @unique
-  image     String
-  price     Int
-  info      String
-  productId Int
-  createdAt DateTime @default(now()) @db.Timestamp(6)
-  updatedAt DateTime @updatedAt @db.Timestamp(6)
-  products  Product  @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  id               Int               @id @default(autoincrement())
+  name             String            @unique
+  image            String
+  price            Int
+  info             String
+  productId        Int
+  createdAt        DateTime          @default(now()) @db.Timestamp(6)
+  updatedAt        DateTime          @updatedAt @db.Timestamp(6)
+  products         Product           @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   orderAdditionals OrderAdditional[]
 
   @@map("additionals")
@@ -34,29 +34,31 @@ model Category {
 }
 
 model Order {
-  id   Int @id @default(autoincrement())
-  note Int
-  code Int @default(autoincrement())
+  id        Int      @id @default(autoincrement())
+  note      Int
+  code      Int      @default(autoincrement())
   quantity  Int
+  
   productId Int
   paymentId Int
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
 
-  payments  Payment  @relation(fields: [paymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  products  Product  @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  payments         Payment           @relation(fields: [paymentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  products         Product           @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   orderAdditionals OrderAdditional[]
+
   @@map("orders")
 }
 
 model OrderAdditional {
-  id          Int       @id @default(autoincrement())
-  orderId     Int
+  id           Int        @id @default(autoincrement())
+  orderId      Int
   additionalId Int
-  createdAt   DateTime @default(now()) @db.Timestamp(6)
-  updatedAt   DateTime @updatedAt @db.Timestamp(6)
-  order       Order    @relation(fields: [orderId], references: [id])
-  additional  Additional @relation(fields: [additionalId], references: [id])
+  createdAt    DateTime   @default(now()) @db.Timestamp(6)
+  updatedAt    DateTime   @updatedAt @db.Timestamp(6)
+  order        Order      @relation(fields: [orderId], references: [id])
+  additional   Additional @relation(fields: [additionalId], references: [id])
 
   @@map("orderAdditionals")
 }
@@ -66,11 +68,12 @@ model Payment {
   code      Int      @unique @default(autoincrement())
   total     Int?
   status    String?  @default("PENDING")
+  change    Int?
   userId    Int?
-  users     User?     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users     User?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   createdAt DateTime @default(now()) @db.Timestamp(6)
   updatedAt DateTime @updatedAt @db.Timestamp(6)
-  orders Order[]
+  orders    Order[]
 
   @@map("payments")
 }
