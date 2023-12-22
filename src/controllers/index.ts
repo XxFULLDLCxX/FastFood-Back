@@ -1,3 +1,4 @@
 export * from './orders-controller';
 export * from './categories-controller';
-export * from './products-controller;'
+export * from './products-controller';
+export * from './payments-controller';
